@@ -9,6 +9,7 @@ contract cryptocraps{
 		uint numberOfRolls;
 		bool gameResult;
 		bool isBetSet;
+	    string name;
 	}
 
 	mapping(address => game) private games;
@@ -16,7 +17,7 @@ contract cryptocraps{
 	event newSetPoint(address bidder, uint8 setPoint);
 	event newBetSet(address bidder, uint8 betAmount);
 	event rollResult(address bidder, uint8 rollResult);
-	event gameResult(address bidder, string gameResult);
+	event gameResult(address bidder, bool gameResult);
 
 
     uint8 private randomizer;
@@ -25,6 +26,15 @@ contract cryptocraps{
 		randomizer=5;
 
 	}
+	
+	function getName() view returns(string){
+		return games[msg.sender].name;
+	}
+	
+	function setName(string _name) public {
+		games[msg.sender].name = _name;
+	}
+	
 
 	function isBetSet() public view returns(bool){
 		return games[msg.sender].isBetSet;
