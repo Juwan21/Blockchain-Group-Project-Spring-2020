@@ -2,7 +2,7 @@
 
 **Team Members:**
 
-*** Ben Carter, Juwan Smith, Kayla Walker, Troy White  ***
+***Ben Carter, Juwan Smith, Kayla Walker, Troy White***
 
 **4/27/20**
 
@@ -28,7 +28,7 @@
  
 
 
-##Steps to run and test CryptoCraps DApp:
+## Steps to run and test CryptoCraps DApp:
 
 1. Download GitHub zip file
 
