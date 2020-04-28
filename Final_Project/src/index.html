@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+		<style>
+		
+			 #A {
+					font-family: "Verdana";
+					font-size: 80px;
+			
+			 }
+			 
+			 #name1 {
+					
+					float: right;
+				
+			 }
+			 
+			 #name2 {
+					
+					float: right;
+			 }
+			
+			 #nn {
+			 
+					float: right;
+			 }
+		
+			
+			 
+			 #enter {
+					
+					padding-right: 50px;
+					padding-left: 20px;
+			 
+			 }
+			 
+			 #bet {
+					
+					padding-left: 20px;
+					padding-right: 100px;
+			 
+			 }
+			 
+			 #betval {
+			 
+				font-size: 25px;
+				
+			 }
+			 
+			 #bet2 {
+				
+				padding-top: 50px;
+				font-size: 40px;
+				color: green;
+				
+			 }
+			 #nn {
+				
+				font-size: 30px;
+			 }
+			 .center{
+				
+				font-size: 40px;
+				
+				text-align: center;
+			 
+			 }
+			 
+			 
+			 #turn {
+					
+					padding-top: 40px;
+					
+			 
+			 }
+			 
+			 #game {
+			 
+					background-color: white;
+					
+			 }
+			 
+			 #game1 {
+						width: 300px;
+						height: 100px;
+						border: 5px solid black;
+						box-sizing: border-box;
+						text-align: center;
+						font-size: 60px;
+						padding-right: 35px;
+						
+			 }
+			 
+			 #game2 {
+					
+					padding: 20px 50px 200px;
+					<!--     top sides btm          -->
+			 }
+			 
+			 #game3 {
+						width: 350px;
+						height: 100px;
+						border: 5px solid black;
+						box-sizing: border-box;
+						text-align: center;
+						font-size: 60px;
+						padding-right: 35px;
+						
+			 }
+			 
+			 .roll {
+					
+					background-color: red;
+					border: none;
+					color: white;
+					padding: 50px 60px;
+					text-align: center;
+					text-decoration: none;
+					display: inline-block;
+					font-size: 16px;
+					cursor: pointer;
+					float: right;
+			 }
+			 
+			 #address {
+			 
+						text-align: center;
+						padding-top: 30px;
+			 }
+			 
+			 
+		</style>
+	<!--script src=”./node_modules/web3/dist/web3.min.js”></script!-->	
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>CryptoCraps</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  
+  
+	<body onload= "setPoint()" style= "background-color: lightgrey;">
+  
+		<h1 id= "A" class="text-center"> CryptoCraps </h1>
+		
+			<div class="row" id="enter">
+					
+					
+				<button id="name2" onclick="enterName()">Enter</button>
+				
+				<input id="name1" type="type"  size="12" placeholder="Enter name here.."> 
+					
+				
+				
+			</div>
+			
+			
+			<hr>
+			
+			<div class="row" id="bet">
+			
+				<p id="nn">Hi, Guest!</p>
+				
+				How much will you Bet? <input id="bet1" type="text"  size="10" placeholder="Enter Value">
+				
+				<button id="bet_btn" onclick="enterVal()">Place Bet</button>
+				<br>
+				<p id="bet2"></p>	
+					
+			</div>
+				
+				
+			<div class="row" id="turn">
+			
+				<p class="center" style="border:3px; border-style:solid; border-color:black;" id= "turn1">Turn Counter:</p>
+  
+			</div>
+			
+			
+			<div class="row" id="game">
+			
+			
+				<div class="col" id="game1">Point:</div>
+
+				<div class="col" id="game2">
+				
+					<button class="roll" onclick="roll()">Roll</button>
+				
+				</div>
+				
+				<div class="col" id="game3">Your Roll:</div>
+				
+				
+			</div>
+			
+			<hr>
+			
+			<div class="row" id="address">
+			
+					Account Address[ ]
+					
+			</div>
+  
+ 
+	<script src="js/initContract.js"></script>
+	<script>
+		
+		var point;
+		var rollCount=0;
+		var rollresult;
+		var gameResult;
+		function setPoint(){
+			Craps.setThePoint(function(error, result){
+						if(!error)
+							console.log(JSON.stringify(result));
+						else
+							console.error(error);
+					});
+			point= ((Math.floor(Math.random() * 6)+1)+(Math.floor(Math.random() * 6)+1));
+			
+			
+		}
+		
+		function enterVal(){
+			
+			var x = document.getElementById("bet1").value;
+
+			document.getElementById("bet2").innerHTML = "Pot Value is "+ x + " ether";
+			
+			document.getElementById("bet_btn").disabled = true;
+			
+			
+			Craps.getNewBet($('#bet1').val(), function(error, result){
+					if(!error)
+						console.log(JSON.stringify(result));
+					else
+						console.error(error);
+				});
+			
+			
+			document.getElementById("game1").innerHTML = "Point: "+ point;
+			
+		}
+		
+		
+		
+		function enterName(){
+			
+			var x = document.getElementById("name1").value;
+			
+			document.getElementById("nn").innerHTML = "Hi, "+ x +"!";
+			
+			document.getElementById("name2").disabled = true;
+			
+			Craps.setName($('#name1').val(), function(error, result){
+					if(!error)
+						console.log(JSON.stringify(result));
+					else
+						console.error(error);
+				});
+				
+		}
+		function roll(){
+			if(rollCount > 3){
+				document.getElementById("turn1").innerHTML = "You Lose! ";
+				gameResult=false;
+				takeEther();
+			}
+			else if(point == 7 || point == 11){
+				document.getElementById("turn1").innerHTML = "You Win! ";
+				gameResult=true;
+				sendEther();
+				}
+			else if(rollCount > 3){
+				document.getElementById("turn1").innerHTML = "You Lose! ";
+				gameResult=false;
+				takeEther();
+			}
+			
+			else if(point == 2 || point == 3 || point == 12){
+				document.getElementById("turn1").innerHTML = "You Lose! ";
+				gameResult=false;
+				takeEther();
+			}
+			rollresult=((Math.floor(Math.random() * 6)+1)+(Math.floor(Math.random() * 6)+1));
+			rollCount= rollCount+1
+			document.getElementById("game3").innerHTML = "Your roll: "+rollresult;
+			if(rollresult == point){
+				document.getElementById("turn1").innerHTML = "You Win! ";
+				gameResult=true;
+				sendEther();
+			}
+			else if(rollresult == 7){
+			 document.getElementById("turn1").innerHTML = "You Lose! ";
+			 gameResult=false;
+			 takeEther();
+			}
+			else{
+			document.getElementById("turn1").innerHTML = "Roll Again, Roll Count is: "+rollCount;
+			}
+			
+			/*Craps.roll(function(error, result){
+					if(!error)
+						console.log(JSON.stringify(result));
+					else
+						console.error(error);
+				});*/
+			
+		}
+		
+		function sendEther(){
+			Craps.sendPayment(function(error, result){
+					if(!error)
+						console.log(JSON.stringify(result));
+					else
+						console.error(error);
+				});
+		}
+		function takeEther(){
+			Craps.recievePayment(
+			function(error, result){
+					if(!error)
+						console.log(JSON.stringify(result));
+					else
+						console.error(error);
+				});
+		}
+		
+		
+		
+	</script>
+
+
+	
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+  
+	
+	</body>
+</html>
